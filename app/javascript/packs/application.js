@@ -11,3 +11,21 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+
+// Vue stuff here
+import { createApp } from 'vue'
+
+import Widget from '../components/Widget'
+// I could import more components here
+
+const components = { Widget } // An object to hold components
+
+// Normally this would be done with 'DOMContentLoaded', but Turbolinks breaks that
+document.addEventListener("turbolinks:load", () => {
+  // Find everything with a data-component
+  document.querySelectorAll('[data-component]').forEach((node) => {
+    // mount the respective Vue component
+    createApp(components[node.dataset.component]).mount(node)
+  })
+})
